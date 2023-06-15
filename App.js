@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import {
   Button,
+  FlatList,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,7 +19,7 @@ export default function App() {
   };
 
   const addGoal = () => {
-    setGoalsLIst((currentList) => [...currentList, goalText]);
+    setGoalsLIst((currentList) => [...currentList, {text: goalText, key: Math.random().toString()}]);
   };
   return (
     <View style={styles.container}>
@@ -31,13 +32,17 @@ export default function App() {
         <Button title="Add Goal" onPress={addGoal} />
       </View>
       <View style={styles.goalsBox}>
-        <ScrollView alwaysBounceVertical={false}>
-          {goalsList.map((goal) => (
-            <View style={styles.goalItem} key={goal}>
-              <Text style={styles.goalText}>{goal}</Text>
-            </View>
-          ))}
-        </ScrollView>
+        <FlatList
+          data={goalsList}
+          renderItem={(itemData) => {
+            return (
+              <View style={styles.goalItem}>
+                <Text style={styles.goalText}>{itemData.item.text}</Text>
+              </View>
+            );
+          }}
+          alwaysBounceVertical={false}
+        />
       </View>
       <StatusBar style="auto" />
     </View>
