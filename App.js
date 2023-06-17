@@ -3,12 +3,11 @@ import { useState } from "react";
 import {
   Button,
   FlatList,
-  ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   View,
 } from "react-native";
+import { GolaItem } from "./components/GoalItem";
 
 export default function App() {
   const [goalText, setGoalText] = useState("");
@@ -19,7 +18,10 @@ export default function App() {
   };
 
   const addGoal = () => {
-    setGoalsLIst((currentList) => [...currentList, {text: goalText, key: Math.random().toString()}]);
+    setGoalsLIst((currentList) => [
+      ...currentList,
+      { text: goalText, key: Math.random().toString() },
+    ]);
   };
   return (
     <View style={styles.container}>
@@ -35,11 +37,7 @@ export default function App() {
         <FlatList
           data={goalsList}
           renderItem={(itemData) => {
-            return (
-              <View style={styles.goalItem}>
-                <Text style={styles.goalText}>{itemData.item.text}</Text>
-              </View>
-            );
+            return <GolaItem text={itemData.item.text} />;
           }}
           alwaysBounceVertical={false}
         />
@@ -75,14 +73,5 @@ const styles = StyleSheet.create({
   },
   goalsBox: {
     flex: 5,
-  },
-  goalItem: {
-    margin: 8,
-    padding: 8,
-    borderRadius: 6,
-    backgroundColor: "#113537",
-  },
-  goalText: {
-    color: "#fff",
   },
 });
