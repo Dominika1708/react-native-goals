@@ -13,7 +13,7 @@ export default function App() {
       ...currentList,
       { text: goalText, id: Math.random().toString() },
     ]);
-    setModalIsVisible(false)
+    setModalIsVisible(false);
   };
 
   const deleteGoalHandler = (id) => {
@@ -21,29 +21,40 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
-      <Button title="Add New Goal" color="#7272AB" onPress={() => setModalIsVisible(true)}/>
-      <GoalInput onAddGoal={addGoalHandler} visible={modalIsVisible} onCancel={() => setModalIsVisible(false)} />
-      <View style={styles.goalsBox}>
-        <FlatList
-          data={goalsList}
-          renderItem={(itemData) => {
-            return (
-              <GolaItem
+    <>
+      <View style={styles.container}>
+        <Button
+          title="Add New Goal"
+          color="#7272AB"
+          onPress={() => setModalIsVisible(true)}
+        />
+        <GoalInput
+          onAddGoal={addGoalHandler}
+          visible={modalIsVisible}
+          onCancel={() => setModalIsVisible(false)}
+        />
+        <View style={styles.goalsBox}>
+          <FlatList
+            data={goalsList}
+            renderItem={(itemData) => {
+              return (
+                <GolaItem
                 text={itemData.item.text}
                 id={itemData.item.id}
                 onDeleteItem={deleteGoalHandler}
-              />
-            );
-          }}
-          keyExtractor={(item) => {
-            return item.id;
-          }}
-          alwaysBounceVertical={false}
-        />
+                />
+                );
+              }}
+            keyExtractor={(item) => {
+              return item.id;
+            }}
+            alwaysBounceVertical={false}
+          />
+        </View>
+        <StatusBar style="auto" />
       </View>
-      <StatusBar style="auto" />
-    </View>
+      <StatusBar style="light" />
+    </>
   );
 }
 
